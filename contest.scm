@@ -2,30 +2,31 @@
 
 ;;; Please do not include your name or personal info in this file.
 
-;;; Title: <Your title here>
+;;; Title: <Relativity Stairs>
 
 ;;; Description:
-;;;   <It's your masterpiece.
-;;;    Use these three lines to describe
-;;;    its inner meaning.>
+;;;   <These are stairs.
+;;;    Gravity does not apply.
+;;;    Up and down they go.>
 
-; (define (draw)
+;;; Stairs inspired by M. C. Escher's never ending staircase drawings.
 
-; (define x (list   "#87CEFA" "#87CEFA" "#87CEFA" "#87CEFA" "#87CEFA" "#87CEFA" "#87CEFA" "#87CEFA" "#7BBBE3" "#7BBBE3" "#6EA9CD" "#6EA9CD" "#6296B6" "#6296B6" "#56839F" "#56839F" "#4A7088" "#3D5E72" "#314B5B" "#253844" "#19252D" "#0C1317" "#000000"))
-(define x (list   "#87CEFA" "#87CEFA" "#87CEFA" "#87CEFA" "#000000"))
-
+(define (draw)
+(define x (list   "#F2784B" "#F2784B" "#F2784B" "#F2784B" "#F2784B"))
 (bgcolor "black")
-; (bgpic "runway-models-56a631543df78cf7728bc513.gif")
-
-
-(goto -50 -300)
-
+(goto -10 -300)
 (clear)
-
 
 (define (change lst amount)
 	(cond 
 		((= amount 1) lst)
+		(else (change (cdr lst) (- amount 1)))))
+
+(define (change-up lst amount)
+	(cond 
+		((= amount 1) lst)
+		((> amount 4) (list "#F2784B"))
+		((< amount 1) (list "#F2784B"))
 		(else (change (cdr lst) (- amount 1)))))
 
 (define (base size repeat)
@@ -53,7 +54,6 @@
 
 (define (rect-left wid len dep)
 	(speed 0)
-	
 	(rectangle wid len)
 	(begin_fill)
 	(left 60)
@@ -67,7 +67,6 @@
 	(forward dep)
 	(forward dep)
 	(forward dep)
-
 	(left 30)
 	(forward wid)
 	(right 90)
@@ -77,7 +76,6 @@
 (define (rect wid len dep)
 	(speed 0)
 	(begin_fill)
-	
 	(left 90)
 	(forward wid)
 	(right 90)
@@ -89,7 +87,6 @@
      (forward dep)
      (forward dep)
      (forward dep)
-
      (left 150)
      (forward wid)
      (left 30)
@@ -99,7 +96,6 @@
      (forward wid)
      (left 90)
      (end_fill)
-
      )
 
 (define (stairs-right wid len dep am)
@@ -110,57 +106,54 @@
 			(left 90)
 			(forward wid)
 			(right 90)
-			(stairs-left wid len dep 4 4))
+			(stairs-left wid len dep 5 5))
 		(else (rect wid len dep) (stairs-right (/ wid (/ 11 10)) (/ len (/ 11 10)) (/ dep (/ 11 10)) (- am 1)))))
-
 
 (define (stairs-left wid len dep am colornum)
 	(speed 0)
 	(color (car (change x colornum)))
 	(cond 
 		((= am 1) (rect-left wid len dep)
-			(left 60)
+			(left 90)
 			; (forward dep)			
 			(left 90)
-			; (forward dep)
 			(right 0)
-			(stairs-left-two wid len dep 4 4))
+			(stairs-left-two wid len dep 5))
 		(else (rect-left wid len dep) (stairs-left (/ wid (/ 11 10)) (/ len (/ 11 10)) (/ dep (/ 11 10)) (- am 1) (- colornum 1)))))
 
-(define (stairs-left-two wid len dep am colornum)
+(define (stairs-left-two wid len dep am)
 	(speed 0)
-	(color (car (change x colornum)))
+	(color (car (change-up x am)))
+	(cond 
+		((= am 1) (rect wid len dep)
+			(left 90)
+			(forward wid)
+			(right 90)
+			(stairs-left-three wid len dep 3))
+		(else (rect wid len dep) (stairs-left-two (/ wid (/ 9 10)) (/ len (/ 9 10)) (/ dep (/ 9 10)) (- am 1)))))
+
+(define (stairs-left-three wid len dep am)
+	(speed 0)
+	(color (car (change-up x am)))
 	(cond 
 		((= am 1) (rect-left wid len dep)
 			(right 90)
 			(forward wid)
 			(left 90))
-		(else (rect wid len dep) (stairs-left-two (/ wid (/ 11 10)) (/ len (/ 11 10)) (/ dep (/ 11 10)) (+ am 1) (- colornum 1)))))
+		(else (rect-left wid len dep) (stairs-left-three (/ wid (/ 9 10)) (/ len (/ 9 10)) (/ dep (/ 9 10)) (- am 1)))))
 
-(stairs-right 125 30 30 (- (length x)1))
+(stairs-right 125 30 32 (- (length x)1))
 
-	
-
-	(end_fill)
-
-
-
-
-
+(end_fill)
 (penup)
-
-
 (bgcolor "Black")
-; (bgpic "runway-models-56a631543df78cf7728bc513.gif")
-
 (color "#003333")
 (penup)
-; 
 (ht)
+)
 
-
-  ; (exitonclick))
+(exitonclick))
 
 ; Please leave this last line alone.  You may add additional procedures above
 ; this line.
-; (draw)
+(draw)
