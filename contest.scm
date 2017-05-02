@@ -5,7 +5,7 @@
 ;;; Title: <Relativity Stairs>
 
 ;;; Description:
-;;;   <These are stairs.
+;;;   <These are some strange stairs.
 ;;;    Gravity does not apply.
 ;;;    Up and down they go.>
 
